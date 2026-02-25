@@ -1,18 +1,74 @@
-Backtests a simple growth strategy using MA cross, RSI filter, ATR stop and trailing logic.
+# growth-app
 
-# grouth-app
-Flet GUI stock backtester using yfinance. Generates HTML report and trade CSV.
+株の売買ルール（エントリー・損切・利確）が  
+本当に機能しているのかを、複数銘柄でまとめて検証できるGUIツールです。
 
-## How to run
+「この条件なら勝てそう」と感じても、  
+実際には銘柄ごとに結果が大きく変わることが多く、  
+感覚だけではロジックの良し悪しを判断するのが難しいため作成しました。
+
+コードを書かなくても、  
+パラメータを調整してボタンを押すだけでバックテストが実行できます。
+
+---
+
+## このツールでできること
+
+### ■ 売買ルールの検証
+短期移動平均と長期移動平均のゴールデンクロスを基本とし、  
+RSIの範囲を指定することで「入りすぎ・過熱」を避けたエントリーを検証できます。
+
+### ■ 損切・利確設計の検証
+ATR（値動きの大きさ）を基準に、  
+損切幅・利確幅を倍率で設定できます。
+
+また、トレイリングストップをONにすると、  
+価格上昇に合わせて損切ラインが追いかける形になります。
+
+### ■ 複数銘柄での横断検証
+growth_tickers.txt に記載した銘柄をすべて対象にバックテストを行い、  
+ロジックが「たまたま当たった」のか  
+「一定の再現性がある」のかを確認できます。
+
+### ■ 結果の可視化
+バックテスト結果はHTMLレポートとして出力され、
+
+- 累積損益の推移
+- 勝ち負けの分布（R倍数）
+- 保有日数の分布
+- 年別の損益
+
+をグラフで確認できます。
+
+さらに、トレード詳細はCSVとして出力されるため、  
+あとから分析や振り返りも可能です。
+
+---
+
+## どんな人に向いているか
+
+- 売買ルールを作っているが、本当に機能しているか不安な人
+- 損切幅や利確幅をどれくらいにするか迷っている人
+- 個別銘柄ではなく、ロジックの再現性を確認したい人
+- バックテストに興味はあるが、コードは書きたくない人
+
+---
+
+## 使い方
 pip install -r requirements.txt
 python growth-app.py
 
-Create growth_tickers.txt with Yahoo Finance tickers.
+growth_tickers.txt には2026.2.26時点のグロース銘柄のティッカーを入れています。
+検証銘柄を変更したい場合は、中身を書き換えてください。
 
-## Features
-- GUI parameter control
-- MA cross + RSI filter entry
-- ATR stop & trailing stop
-- Multi-ticker backtesting
-- Plotly HTML report
-- Trade CSV export
+## 出力ファイル
+
+- report_gui.html（検証レポート）
+- app_trade_details.csv（トレード内訳）
+
+---
+
+## 注意
+
+本ツールは投資助言を目的としたものではなく、  
+売買ルールの検証・研究用途を想定しています。
